@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="light" style=""><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz Analizy Potrzeb Klienta - Ubezpieczenia na Życie</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" rel="stylesheet">
+    <style>
+      body {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 40px;
+        font-family: 'Roboto', Arial, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        line-height: 1.5;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c3e50;
+        border-bottom: 2px solid #2c3e50;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #2980b9;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #444;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+      }
+
+      label {
+        font-weight: 500;
+        font-size: 14px;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type='text'],
+      input[type='number'],
+      input[type='email'],
+      input[type='tel'],
+      input[type='date'],
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+        background-color: #f9f9f9;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+      }
+
+      .col {
+        flex: 1;
+        padding: 0 10px;
+        min-width: 250px;
+      }
+
+      .checkbox-group,
+      .radio-group {
+        margin-bottom: 15px;
+      }
+
+      .checkbox-item,
+      .radio-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .checkbox-item input,
+      .radio-item input {
+        margin-right: 10px;
+        width: auto;
+        margin-bottom: 0;
+      }
+
+      .checkbox-item label,
+      .radio-item label {
+        margin-bottom: 0;
+        font-weight: 400;
+        cursor: pointer;
+      }
+
+      .signature-section {
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 2px solid #eee;
+      }
+
+      .signature-box {
+        border-top: 1px solid #333;
+        width: 80%;
+        margin-top: 40px;
+        padding-top: 5px;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .legal-note {
+        font-size: 11px;
+        color: #777;
+        margin-top: 30px;
+        text-align: justify;
+        line-height: 1.3;
+      }
+
+      .header-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .partner-section-content {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .partner-section-content.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background-color: #2980b9;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #1f6391;
+      }
+
+      .btn-secondary {
+        background-color: #27ae60;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #1e8449;
+      }
+
+      .btn-tertiary {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .btn-tertiary:hover {
+        background-color: #c0392b;
+      }
+
+      .no-print {
+        /* Ukryj przyciski przy drukowaniu */
+      }
+
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        body {
+          padding: 20px;
+        }
+      }
+
+      .required {
+        color: #e74c3c;
+        font-weight: bold;
+      }
+
+      input:invalid, select:invalid, textarea:invalid {
+        border-color: #e74c3c;
+      }
+
+      .email-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      .email-modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 30px;
+        border: 1px solid #888;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+
+      .email-modal-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .email-modal-close:hover {
+        color: #000;
+      }
+
+      .priority-item {
+        background-color: white;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 2px solid #e0e0e0;
+        cursor: move;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .priority-item:hover {
+        border-color: #2980b9;
+        box-shadow: 0 2px 8px rgba(41, 128, 185, 0.2);
+      }
+
+      .priority-item.dragging {
+        opacity: 0.5;
+        border-color: #2980b9;
+        background-color: #e8f4f8;
+      }
+
+      .priority-item.drag-over {
+        border-top: 3px solid #2980b9;
+      }
+
+      .drag-handle {
+        color: #999;
+        font-size: 20px;
+        margin-right: 15px;
+        cursor: grab;
+        user-select: none;
+      }
+
+      .drag-handle:active {
+        cursor: grabbing;
+      }
+
+      .priority-number {
+        display: inline-block;
+        width: 30px;
+        font-weight: 700;
+        color: #2980b9;
+        font-size: 16px;
+      }
+
+      .priority-label {
+        font-weight: 500;
+        font-size: 15px;
+        color: #333;
+        flex: 1;
+      }
+
+      .recommendation-box {
+        background-color: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #27ae60;
+      }
+
+      .recommendation-box.warning {
+        border-left-color: #e74c3c;
+      }
+
+      .recommendation-box.info {
+        border-left-color: #3498db;
+      }
+
+      .recommendation-title {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: #2c3e50;
+      }
+
+      .recommendation-text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #555;
+      }
+
+      .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        background-color: white;
+      }
+
+      .summary-table th,
+      .summary-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      .summary-table th {
+        background-color: #2980b9;
+        color: white;
+        font-weight: 600;
+      }
+
+      .summary-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body style="">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNmZmZmZmYiLz4KICAKICA8IS0tIFNxdWFyZSBCICgwLCA2MCAtPiAxMjAsIDE4MCkgLS0+CiAgPHBhdGggZD0iTTEwMCw3MCBMMTgwLDcwIEwxODAsMTAwIEwxMzAsMTAwIEwxMzAsMTMwIEwxODAsMTMwIEwxODAsMTcwIEwxMDAsMTcwIFoiIAogICAgICAgIGZpbGw9IiMwMDRkODQiLz4KICAKICA8IS0tIFNoaWVsZCAoMTUwLCAxMDUgLT4gMjEwLCAxODApIC0tPgogIDxwYXRoIGQ9Ik0xNjAsMTEwIEwyMDAsMTEwIEwyMTAsMTIwIEwyMTAsMTYwIEwxODUsMTgwIEwxNjAsMTYwIFoiIAogICAgICAgIGZpbGw9IiMwMDRkODQiLz4KICAKICA8IS0tIEFycm93IChkaWFnb25hbCwgZ3JhZGllbnQpIC0tPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJhcnJvd0dyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1YTY4N2E7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOGI3MzYzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZmE1MDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cGF0aCBkPSJNMTQwLDEzNSBMMjgwLDYwIEwyOTAsNzAgTDI5MCw5NSBMMzEwLDc1IEwzMTAsNDAgTDE1MCwxMTUgWiIgCiAgICAgICAgZmlsbD0idXJsKCNhcnJvd0dyYWRpZW50KSIvPgogIAogIDwhLS0gSiAoMjEwLCA2MCAtPiAyODAsIDE4MCkgLS0+CiAgPHBhdGggZD0iTTIyMCw3MCBMMjcwLDcwIEwyNzAsMTYwIEwyNTUsMTgwIEwyMjAsMTgwIEwyMDUsMTY1IEwyMDUsMTMwIEwyMzUsMTMwIEwyMzUsMTUwIEwyNDUsMTUwIEwyNDUsMTAwIEwyMjAsMTAwIFoiIAogICAgICAgIGZpbGw9IiMwMDRkODQiLz4KICAKICA8IS0tIFRleHQgLS0+CiAgPHRleHQgeD0iMjUwIiB5PSIyNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxYTM1NWUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkJlemllY3puZSBKdXRybzwvdGV4dD4KPC9zdmc+" alt="Bezpieczne Jutro" style="max-width: 300px; height: auto;">
+    </div>
+
+    <div class="header-info">
+      <div><strong>Dokument:</strong> Formularz Analizy Potrzeb Klienta (APK)</div>
+      <div><strong>Data wypełnienia:</strong> 31.12.2025</div>
+    </div>
+
+    <h1>
+      Karta Analizy Potrzeb Klienta<br><span style="font-size: 16px; font-weight: normal; text-transform: none">Ubezpieczenia na Życie i Zdrowie</span>
+    </h1>
+
+    <!-- Przyciski akcji -->
+    <div class="action-buttons no-print">
+      <button class="btn btn-primary" onclick="printForm()">🖨️ Drukuj / Zapisz jako PDF</button>
+      <button class="btn btn-secondary" onclick="saveFormData()">💾 Zapisz dane lokalnie</button>
+      <button class="btn btn-tertiary" onclick="openEmailModal()">📧 Wyślij przez email</button>
+      <button class="btn btn-primary" onclick="loadFormData()">📂 Wczytaj zapisane dane</button>
+    </div>
+
+    <form id="analysisForm">
+
+    <div class="section">
+      <h2>1. Dane Osobowe Klienta</h2>
+      <div class="row">
+        <div class="col">
+          <label for="imie">Imię: <span class="required">*</span></label>
+          <input type="text" id="imie" name="imie" required="">
+        </div>
+        <div class="col">
+          <label for="nazwisko">Nazwisko: <span class="required">*</span></label>
+          <input type="text" id="nazwisko" name="nazwisko" required="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="data_urodzenia">Data urodzenia:</label>
+          <input type="date" id="data_urodzenia" name="data_urodzenia">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="telefon">Telefon kontaktowy: <span class="required">*</span></label>
+          <input type="tel" id="telefon" name="telefon" required="">
+        </div>
+        <div class="col">
+          <label for="email">Adres e-mail: <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="miejscowosc">Miejscowość:</label>
+          <input type="text" id="miejscowosc" name="miejscowosc">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. Dane Współmałżonka / Partnera (opcjonalnie)</h2>
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px; font-style: italic">
+        Wypełnij tylko jeśli współmałżonek/partner ma być objęty ubezpieczeniem
+      </p>
+      <div class="checkbox-item" style="margin-bottom: 20px; background-color: #f0f8ff; padding: 10px; border-radius: 5px;">
+        <input type="checkbox" id="ubezpieczenie_partnera" name="ubezpieczenie_partnera" value="tak" onchange="togglePartnerSection()">
+        <label for="ubezpieczenie_partnera" style="font-weight: 600; color: #2980b9;">
+          Tak, chcę objąć ubezpieczeniem współmałżonka/partnera
+        </label>
+      </div>
+      
+      <div id="partnerSectionContent" class="partner-section-content">
+      <div class="row">
+        <div class="col">
+          <label for="partner_imie">Imię:</label>
+          <input type="text" id="partner_imie" name="partner_imie">
+        </div>
+        <div class="col">
+          <label for="partner_nazwisko">Nazwisko:</label>
+          <input type="text" id="partner_nazwisko" name="partner_nazwisko">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="partner_data_urodzenia">Data urodzenia:</label>
+          <input type="date" id="partner_data_urodzenia" name="partner_data_urodzenia">
+        </div>
+        <div class="col">
+          <label for="partner_telefon">Telefon kontaktowy:</label>
+          <input type="tel" id="partner_telefon" name="partner_telefon">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="partner_zawod">Wykonywany zawód / stanowisko:</label>
+          <input type="text" id="partner_zawod" name="partner_zawod">
+        </div>
+        <div class="col">
+          <label>Forma zatrudnienia:</label>
+          <select name="partner_forma_zatrudnienia">
+            <option value="">Wybierz...</option>
+            <option value="umowa_praca">Umowa o pracę</option>
+            <option value="umowa_zlecenie">Umowa zlecenie / o dzieło</option>
+            <option value="dzialalnosc">Własna działalność gospodarcza</option>
+            <option value="emerytura">Emerytura / Renta</option>
+            <option value="bezrobotny">Bezrobotny / Uczący się</option>
+          </select>
+        </div>
+      </div>
+      <label for="partner_uwagi">Uwagi dotyczące ubezpieczenia partnera (np. posiadane polisy, preferencje):</label>
+      <textarea id="partner_uwagi" name="partner_uwagi" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Sytuacja Rodzinna</h2>
+      <div class="row">
+        <div class="col">
+          <label>Stan cywilny:</label>
+          <select name="stan_cywilny">
+            <option value="">Wybierz...</option>
+            <option value="kawaler_panna">Kawaler / Panna</option>
+            <option value="zona_maz">Mężatka / Żonaty</option>
+            <option value="rozwodnik">Rozwiedziona / Rozwiedziony</option>
+            <option value="wdowa">Wdowa / Wdowiec</option>
+            <option value="partner">Związek nieformalny</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="liczba_dzieci">Liczba dzieci na utrzymaniu:</label>
+          <input type="number" id="liczba_dzieci" name="liczba_dzieci" min="0" max="10" value="0" onchange="generateChildrenFields()">
+        </div>
+      </div>
+      
+      <!-- Dynamiczne pola dla dzieci -->
+      <div id="childrenFieldsContainer" style="margin-top: 20px;"></div>
+      
+      <div class="row">
+        <div class="col">
+          <label for="inne_osoby">Inne osoby na utrzymaniu (np. rodzice):</label>
+          <input type="text" id="inne_osoby" name="inne_osoby">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. Sytuacja Zawodowa i Finansowa</h2>
+      <div class="row">
+        <div class="col">
+          <label for="zawod">Wykonywany zawód / stanowisko:</label>
+          <input type="text" id="zawod" name="zawod">
+        </div>
+        <div class="col">
+          <label>Forma zatrudnienia:</label>
+          <select name="forma_zatrudnienia">
+            <option value="">Wybierz...</option>
+            <option value="umowa_praca">Umowa o pracę</option>
+            <option value="umowa_zlecenie">Umowa zlecenie / o dzieło</option>
+            <option value="dzialalnosc">Własna działalność gospodarcza</option>
+            <option value="emerytura">Emerytura / Renta</option>
+            <option value="bezrobotny">Bezrobotny / Uczący się</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="koszty_zycia">Miesięczne koszty stałe gospodarstwa (PLN):</label>
+          <input type="number" id="koszty_zycia" name="koszty_zycia" placeholder="Rachunki, żywność, edukacja itp.">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="zobowiazania">Kredyty i pożyczki (całkowita kwota do spłaty):</label>
+          <input type="number" id="zobowiazania" name="zobowiazania">
+        </div>
+        <div class="col">
+          <label for="rata_kredytu">Miesięczna rata wszystkich zobowiązań:</label>
+          <input type="number" id="rata_kredytu" name="rata_kredytu">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4a. Priorytety Życiowe</h2>
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px">
+        Proszę ustawić hierarchię priorytetów (przeciągnij i upuść, aby zmienić kolejność). Pierwszy na liście = najważniejszy.
+      </p>
+      
+      <div id="prioritiesContainer" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; border: 2px dashed #ccc;">
+        <div class="priority-item" draggable="true" data-priority="rodzina">
+          <span class="drag-handle">⋮⋮</span>
+          <span class="priority-number">1.</span>
+          <span class="priority-label">Rodzina</span>
+        </div>
+        <div class="priority-item" draggable="true" data-priority="kariera">
+          <span class="drag-handle">⋮⋮</span>
+          <span class="priority-number">2.</span>
+          <span class="priority-label">Kariera</span>
+        </div>
+        <div class="priority-item" draggable="true" data-priority="dom">
+          <span class="drag-handle">⋮⋮</span>
+          <span class="priority-number">3.</span>
+          <span class="priority-label">Posiadanie domu</span>
+        </div>
+        <div class="priority-item" draggable="true" data-priority="samochod">
+          <span class="drag-handle">⋮⋮</span>
+          <span class="priority-number">4.</span>
+          <span class="priority-label">Samochód</span>
+        </div>
+        <div class="priority-item" draggable="true" data-priority="podroze">
+          <span class="drag-handle">⋮⋮</span>
+          <span class="priority-number">5.</span>
+          <span class="priority-label">Podróże</span>
+        </div>
+        <div class="priority-item" draggable="true" data-priority="inne">
+          <span class="drag-handle">⋮⋮</span>
+          <span class="priority-number">6.</span>
+          <span class="priority-label">Inne:</span>
+          <input type="text" id="inne_priorytet" name="inne_priorytet" placeholder="wpisz własny priorytet" style="width: 250px; padding: 5px; margin-left: 10px; display: inline-block; margin-bottom: 0;">
+        </div>
+      </div>
+      
+      <input type="hidden" id="priorities_order" name="priorities_order" value="">
+      
+      <p style="font-size: 12px; color: #999; margin-top: 10px; font-style: italic;">
+        💡 Wskazówka: Chwyć za ikonę ⋮⋮ i przeciągnij element, aby zmienić kolejność priorytetów
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>5. Aktualne Zabezpieczenia</h2>
+      <div class="checkbox-group">
+        <label style="margin-bottom: 10px">Jakie ubezpieczenia posiada Pan/Pani obecnie?</label>
+        <div class="checkbox-item">
+          <input type="checkbox" id="zus" name="ubezpieczenia_obecne" value="zus">
+          <label for="zus">ZUS / KRUS (podstawowe)</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="grupowe" name="ubezpieczenia_obecne" value="grupowe">
+          <label for="grupowe">Ubezpieczenie grupowe w pracy</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="indywidualne" name="ubezpieczenia_obecne" value="indywidualne">
+          <label for="indywidualne">Indywidualna polisa na życie</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="nnw" name="ubezpieczenia_obecne" value="nnw">
+          <label for="nnw">NNW (szkolne/komunikacyjne)</label>
+        </div>
+      </div>
+      <label for="uwagi_zabezpieczenia">Uwagi do posiadanych polis (np. sumy ubezpieczenia, data wygaśnięcia):</label>
+      <textarea id="uwagi_zabezpieczenia" name="uwagi_zabezpieczenia"></textarea>
+    </div>
+
+    <div class="section">
+      <h2>6. Cele i Potrzeby Ubezpieczeniowe</h2>
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px">
+        Proszę zaznaczyć priorytety (1 - mało ważne, 5 - bardzo ważne) oraz wpisać pożądaną kwotę zabezpieczenia.
+      </p>
+
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Zabezpieczenie finansowe rodziny na wypadek śmierci</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_smierc">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="kwota_smierc" placeholder="np. 500000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Spłata kredytów i długów w razie nieszczęścia</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_kredyt">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="kwota_kredyt" placeholder="np. 300000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Środki na leczenie poważnych zachorowań (np. nowotwór)</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_choroba">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="kwota_choroba" placeholder="np. 200000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Ochrona w przypadku uszczerbku na zdrowiu</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_uszczerbek">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="kwota_uszczerbek" placeholder="np. 150000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Ochrona w przypadku urazu / wypadku</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_uraz">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="kwota_uraz" placeholder="np. 100000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2">
+            <strong>Gromadzenie kapitału (np. emerytura, start dziecka w dorosłość)</strong>
+          </div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_emerytura">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="kwota_emerytura" placeholder="np. 250000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+        <div class="row" style="align-items: center;">
+          <div class="col" style="flex: 2">
+            <strong>Prywatna opieka medyczna / Dostęp do lekarzy specjalistów</strong>
+          </div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="cel_lekarze">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>6a. Cele i Potrzeby Ubezpieczeniowe dla Partnera/Współmałżonka (opcjonalnie)</h2>
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px; font-style: italic">
+        Wypełnij tylko jeśli współmałżonek/partner ma być objęty ubezpieczeniem
+      </p>
+      
+      <div id="partnerGoalsContent" class="partner-section-content">
+      <p style="font-size: 13px; color: #666; margin-bottom: 15px">
+        Proszę zaznaczyć priorytety dla partnera (1 - mało ważne, 5 - bardzo ważne) oraz wpisać pożądaną kwotę zabezpieczenia.
+      </p>
+
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Zabezpieczenie finansowe rodziny na wypadek śmierci</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_smierc">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="partner_kwota_smierc" placeholder="np. 500000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Spłata kredytów i długów w razie nieszczęścia</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_kredyt">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="partner_kwota_kredyt" placeholder="np. 300000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Środki na leczenie poważnych zachorowań (np. nowotwór)</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_choroba">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="partner_kwota_choroba" placeholder="np. 200000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Ochrona w przypadku uszczerbku na zdrowiu</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_uszczerbek">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="partner_kwota_uszczerbek" placeholder="np. 150000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2"><strong>Ochrona w przypadku urazu / wypadku</strong></div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_uraz">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="partner_kwota_uraz" placeholder="np. 100000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center; margin-bottom: 10px;">
+          <div class="col" style="flex: 2">
+            <strong>Gromadzenie kapitału (np. emerytura, start dziecka w dorosłość)</strong>
+          </div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_emerytura">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="col">
+            <label style="font-size: 12px; margin-bottom: 3px;">Kwota zabezpieczenia (PLN):</label>
+            <input type="number" name="partner_kwota_emerytura" placeholder="np. 250000" style="margin-bottom: 0;">
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px; padding: 15px; background-color: #fff5e6; border-radius: 5px;">
+        <div class="row" style="align-items: center;">
+          <div class="col" style="flex: 2">
+            <strong>Prywatna opieka medyczna / Dostęp do lekarzy specjalistów</strong>
+          </div>
+          <div class="col" style="flex: 1">
+            <label style="font-size: 12px; margin-bottom: 3px;">Priorytet:</label>
+            <select name="partner_cel_lekarze">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>7. Budżet i Preferencje</h2>
+      <div class="row">
+        <div class="col">
+          <label for="budzet">Preferowany miesięczny budżet na składkę (PLN):</label>
+          <input type="number" id="budzet" name="budzet">
+        </div>
+        <div class="col">
+          <label for="czestotliwosc">Preferowana częstotliwość opłacania składki:</label>
+          <select id="czestotliwosc" name="czestotliwosc">
+            <option value="miesieczna">Miesięczna</option>
+            <option value="kwartalna">Kwartalna</option>
+            <option value="polroczna">Półroczna</option>
+            <option value="roczna">Roczna</option>
+          </select>
+        </div>
+      </div>
+      <label for="oczekiwania_dodatkowe">Dodatkowe oczekiwania lub uwagi klienta:</label>
+      <textarea id="oczekiwania_dodatkowe" name="oczekiwania_dodatkowe"></textarea>
+      
+      <!-- Przycisk generowania rekomendacji -->
+      <div style="margin-top: 20px; text-align: center;">
+        <button type="button" class="btn btn-primary" onclick="generateRecommendations()" style="font-size: 16px; padding: 15px 30px;">
+          💡 Generuj Rekomendacje
+        </button>
+      </div>
+    </div>
+
+    <!-- Sekcja rekomendacji (ukryta domyślnie) -->
+    <div id="recommendationsSection" class="section" style="display: none; background-color: #e8f4f8; border: 3px solid #2980b9; border-radius: 8px; padding: 25px; margin-top: 30px;">
+      <h2 style="color: #2980b9; text-align: center; margin-bottom: 20px;">
+        📊 Rekomendacje dla Klienta
+      </h2>
+      <div id="recommendationsContent">
+        <!-- Treść rekomendacji zostanie wygenerowana przez JavaScript -->
+      </div>
+    </div>
+
+    <div class="signature-section">
+      <div class="row">
+        <div class="col">
+          <div class="signature-box">Podpis Klienta</div>
+        </div>
+        <div class="col">
+          <div class="signature-box">Podpis Agenta</div>
+        </div>
+      </div>
+      <div style="margin-top: 20px; text-align: right; font-size: 14px">
+        Miejscowość, Data: __________________________
+      </div>
+    </div>
+
+    <div class="legal-note">
+      <p>
+        <strong>Oświadczenie:</strong> Oświadczam, że powyższe dane zostały podane dobrowolnie i są zgodne ze stanem
+        faktycznym. Informacje te posłużą wyłącznie do przygotowania oferty ubezpieczeniowej dopasowanej do moich
+        potrzeb. Wyrażam zgodę na przetwarzanie moich danych osobowych w celu przygotowania oferty.
+      </p>
+    </div>
+
+    </form>
+
+    <!-- Modal do wysyłki email -->
+    <div id="emailModal" class="email-modal">
+      <div class="email-modal-content">
+        <span class="email-modal-close" onclick="closeEmailModal()">×</span>
+        <h2 style="margin-top: 0;">Wyślij formularz przez email</h2>
+        <p style="font-size: 13px; color: #666;">Uwaga: To jest wersja demonstracyjna. W pełnej wersji formularz zostałby wysłany na wskazany adres.</p>
+        <label for="recipient_email">Adres e-mail odbiorcy:</label>
+        <input type="email" id="recipient_email" value="d.grzymala@bezpiecznejutro.online" style="width: 100%; margin-bottom: 15px;">
+        <label for="email_subject">Temat wiadomości:</label>
+        <input type="text" id="email_subject" value="Formularz Analizy Potrzeb Klienta" style="width: 100%; margin-bottom: 15px;">
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button class="btn btn-secondary" onclick="sendFormByEmail()" style="flex: 1;">Wyślij</button>
+          <button class="btn btn-tertiary" onclick="closeEmailModal()" style="flex: 1;">Anuluj</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Funkcja do obliczania wieku konkretnego dziecka
+      function calculateChildAge(childIndex) {
+        const dateInput = document.getElementById(`dziecko_${childIndex}_data_urodzenia`);
+        const ageInput = document.getElementById(`dziecko_${childIndex}_wiek`);
+        
+        if (dateInput && ageInput && dateInput.value) {
+          const birthDate = new Date(dateInput.value);
+          const today = new Date();
+          let age = today.getFullYear() - birthDate.getFullYear();
+          const monthDiff = today.getMonth() - birthDate.getMonth();
+          
+          if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+          }
+          
+          ageInput.value = age >= 0 ? age : 0;
+        }
+      }
+      
+      // Funkcja do generowania pól dla dzieci
+      function generateChildrenFields() {
+        const liczbadzieci = parseInt(document.getElementById('liczba_dzieci').value) || 0;
+        const container = document.getElementById('childrenFieldsContainer');
+        
+        // Wyczyść istniejące pola
+        container.innerHTML = '';
+        
+        if (liczbadzieci > 0) {
+          container.innerHTML = '<h3 style="margin-top: 20px; margin-bottom: 15px; color: #2980b9;">Dane dzieci:</h3>';
+          
+          for (let i = 1; i <= liczbadzieci; i++) {
+            const childDiv = document.createElement('div');
+            childDiv.style.marginBottom = '20px';
+            childDiv.style.padding = '15px';
+            childDiv.style.backgroundColor = '#f9f9f9';
+            childDiv.style.borderRadius = '5px';
+            childDiv.style.border = '1px solid #e0e0e0';
+            
+            childDiv.innerHTML = `
+              <h4 style="margin-top: 0; margin-bottom: 10px; color: #555;">Dziecko ${i}</h4>
+              <div class="row">
+                <div class="col">
+                  <label for="dziecko_${i}_imie">Imię:</label>
+                  <input type="text" id="dziecko_${i}_imie" name="dziecko_${i}_imie">
+                </div>
+                <div class="col">
+                  <label for="dziecko_${i}_nazwisko">Nazwisko:</label>
+                  <input type="text" id="dziecko_${i}_nazwisko" name="dziecko_${i}_nazwisko">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="dziecko_${i}_data_urodzenia">Data urodzenia:</label>
+                  <input type="date" id="dziecko_${i}_data_urodzenia" name="dziecko_${i}_data_urodzenia" onchange="calculateChildAge(${i})" oninput="calculateChildAge(${i})">
+                </div>
+                <div class="col">
+                  <label for="dziecko_${i}_wiek">Wiek (lat):</label>
+                  <input type="number" id="dziecko_${i}_wiek" name="dziecko_${i}_wiek" min="0" max="100" placeholder="Obliczany automatycznie" readonly style="background-color: #e9ecef;">
+                </div>
+              </div>
+            `;
+            
+            container.appendChild(childDiv);
+          }
+        }
+      }
+      
+      // Funkcja calculateChildAge została przesunięta na początek skryptu
+
+      // Funkcja do pokazywania/ukrywania sekcji partnera
+      function togglePartnerSection() {
+        const checkbox = document.getElementById('ubezpieczenie_partnera');
+        const partnerContent = document.getElementById('partnerSectionContent');
+        const partnerGoalsContent = document.getElementById('partnerGoalsContent');
+        
+        if (checkbox.checked) {
+          partnerContent.classList.add('active');
+          partnerGoalsContent.classList.add('active');
+        } else {
+          partnerContent.classList.remove('active');
+          partnerGoalsContent.classList.remove('active');
+        }
+      }
+
+      // Funkcja do drukowania formularza
+      function printForm() {
+        window.print();
+      }
+
+      // Funkcja do zapisywania danych formularza lokalnie
+      function saveFormData() {
+        const form = document.getElementById('analysisForm');
+        const formData = new FormData(form);
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+          data[key] = value;
+        }
+        
+        // Zapisz do localStorage
+        localStorage.setItem('formularAnaliza', JSON.stringify(data));
+        
+        // Zapisz datę
+        const saveDate = new Date().toLocaleString('pl-PL');
+        localStorage.setItem('formularAnalizaData', saveDate);
+        
+        alert('✅ Dane formularza zostały zapisane lokalnie!\n\nData zapisu: ' + saveDate + '\n\nMożesz je wczytać w każdej chwili klikając "Wczytaj zapisane dane".');
+      }
+
+      // Funkcja do wczytywania zapisanych danych
+      function loadFormData() {
+        const savedData = localStorage.getItem('formularAnaliza');
+        const saveDate = localStorage.getItem('formularAnalizaData');
+        
+        if (!savedData) {
+          alert('❌ Nie znaleziono zapisanych danych.');
+          return;
+        }
+        
+        if (confirm('Czy na pewno chcesz wczytać dane zapisane dnia: ' + saveDate + '?\n\nAktualne dane w formularzu zostaną nadpisane.')) {
+          const data = JSON.parse(savedData);
+          const form = document.getElementById('analysisForm');
+          
+          // Najpierw wypełnij liczbę dzieci, aby wygenerować pola
+          if (data.liczba_dzieci) {
+            document.getElementById('liczba_dzieci').value = data.liczba_dzieci;
+            generateChildrenFields();
+          }
+          
+          // Wypełnij formularz
+          for (let key in data) {
+            const element = form.elements[key];
+            if (element) {
+              if (element.type === 'checkbox') {
+                element.checked = data[key] === 'tak';
+              } else if (element.type === 'radio') {
+                const radio = form.querySelector(`input[name="${key}"][value="${data[key]}"]`);
+                if (radio) radio.checked = true;
+              } else {
+                element.value = data[key];
+              }
+            }
+          }
+          
+          // Sprawdź czy pokazać sekcję partnera
+          togglePartnerSection();
+          
+          // Przelicz wiek dzieci
+          const liczbadzieci = parseInt(document.getElementById('liczba_dzieci').value) || 0;
+          for (let i = 1; i <= liczbadzieci; i++) {
+            calculateChildAge(i);
+          }
+          
+          alert('✅ Dane zostały wczytane pomyślnie!');
+        }
+      }
+
+      // Funkcja do otwierania modala email
+      function openEmailModal() {
+        const modal = document.getElementById('emailModal');
+        modal.style.display = 'block';
+      }
+
+      // Funkcja do zamykania modala email
+      function closeEmailModal() {
+        const modal = document.getElementById('emailModal');
+        modal.style.display = 'none';
+      }
+
+      // Funkcja do wysyłania formularza przez email (symulacja)
+      function sendFormByEmail() {
+        const recipientEmail = document.getElementById('recipient_email').value;
+        const subject = document.getElementById('email_subject').value;
+        
+        if (!recipientEmail) {
+          alert('❌ Proszę podać adres e-mail odbiorcy.');
+          return;
+        }
+        
+        // W prawdziwej implementacji tutaj byłoby wysłanie formularza przez backend
+        alert('✅ Funkcja wysyłki email!\n\nW pełnej wersji formularz zostałby wysłany na adres:\n' + recipientEmail + '\n\nTemat: ' + subject + '\n\nAby zaimplementować tę funkcję, potrzebujesz backendu (np. PHP, Node.js) z konfiguracją serwera SMTP.');
+        
+        closeEmailModal();
+      }
+
+      // Zamknij modal klikając poza nim
+      window.onclick = function(event) {
+        const modal = document.getElementById('emailModal');
+        if (event.target == modal) {
+          closeEmailModal();
+        }
+      }
+
+      // Walidacja formularza przed drukowaniem
+      window.addEventListener('beforeprint', function() {
+        console.log('Przygotowanie do drukowania...');
+      });
+
+      // Ustaw domyślną datę wypełnienia przy ładowaniu strony
+      window.addEventListener('load', function() {
+        const today = new Date().toLocaleDateString('pl-PL');
+        const headerInfo = document.querySelector('.header-info div:last-child');
+        if (headerInfo) {
+          headerInfo.innerHTML = '<strong>Data wypełnienia:</strong> ' + today;
+        }
+        
+        // Inicjalizuj drag & drop dla priorytetów
+        initPrioritiesDragDrop();
+        updatePrioritiesOrder();
+      });
+
+      // Funkcja inicjalizująca drag & drop dla priorytetów
+      function initPrioritiesDragDrop() {
+        const container = document.getElementById('prioritiesContainer');
+        const items = container.querySelectorAll('.priority-item');
+        let draggedItem = null;
+
+        items.forEach(item => {
+          item.addEventListener('dragstart', function(e) {
+            draggedItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+          });
+
+          item.addEventListener('dragend', function(e) {
+            this.classList.remove('dragging');
+            items.forEach(i => i.classList.remove('drag-over'));
+            updatePrioritiesNumbers();
+            updatePrioritiesOrder();
+          });
+
+          item.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            
+            if (draggedItem !== this) {
+              this.classList.add('drag-over');
+            }
+          });
+
+          item.addEventListener('dragleave', function(e) {
+            this.classList.remove('drag-over');
+          });
+
+          item.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+            
+            if (draggedItem !== this) {
+              const allItems = [...container.querySelectorAll('.priority-item')];
+              const draggedIndex = allItems.indexOf(draggedItem);
+              const targetIndex = allItems.indexOf(this);
+              
+              if (draggedIndex < targetIndex) {
+                this.parentNode.insertBefore(draggedItem, this.nextSibling);
+              } else {
+                this.parentNode.insertBefore(draggedItem, this);
+              }
+            }
+          });
+        });
+      }
+
+      // Funkcja aktualizująca numery priorytetów
+      function updatePrioritiesNumbers() {
+        const items = document.querySelectorAll('#prioritiesContainer .priority-item');
+        items.forEach((item, index) => {
+          const numberSpan = item.querySelector('.priority-number');
+          if (numberSpan) {
+            numberSpan.textContent = (index + 1) + '.';
+          }
+        });
+      }
+
+      // Funkcja zapisująca kolejność priorytetów do ukrytego pola
+      function updatePrioritiesOrder() {
+        const items = document.querySelectorAll('#prioritiesContainer .priority-item');
+        const order = [];
+        
+        items.forEach((item, index) => {
+          const priority = item.getAttribute('data-priority');
+          let label = item.querySelector('.priority-label').textContent.trim().replace(':', '');
+          
+          // Jeśli to "Inne", dodaj wartość z inputa
+          if (priority === 'inne') {
+            const inneInput = document.getElementById('inne_priorytet');
+            if (inneInput && inneInput.value) {
+              label = 'Inne: ' + inneInput.value;
+            }
+          }
+          
+          order.push((index + 1) + '. ' + label);
+        });
+        
+        document.getElementById('priorities_order').value = order.join(' | ');
+      }
+
+      // Aktualizuj kolejność gdy użytkownik wpisze coś w pole "Inne"
+      document.addEventListener('DOMContentLoaded', function() {
+        const inneInput = document.getElementById('inne_priorytet');
+        if (inneInput) {
+          inneInput.addEventListener('input', updatePrioritiesOrder);
+        }
+      });
+
+      // Funkcja generowania rekomendacji
+      function generateRecommendations() {
+        const form = document.getElementById('analysisForm');
+        const formData = new FormData(form);
+        
+        // Sprawdź czy podstawowe dane są wypełnione
+        const imie = formData.get('imie');
+        const nazwisko = formData.get('nazwisko');
+        
+        if (!imie || !nazwisko) {
+          alert('⚠️ Proszę wypełnić przynajmniej imię i nazwisko przed wygenerowaniem rekomendacji.');
+          return;
+        }
+        
+        // Zbierz dane z formularza
+        const data = {
+          imie: imie,
+          nazwisko: nazwisko,
+          liczba_dzieci: parseInt(formData.get('liczba_dzieci')) || 0,
+          koszty_zycia: parseInt(formData.get('koszty_zycia')) || 0,
+          zobowiazania: parseInt(formData.get('zobowiazania')) || 0,
+          budzet: parseInt(formData.get('budzet')) || 0,
+          // Priorytety
+          cel_smierc: parseInt(formData.get('cel_smierc')) || 1,
+          cel_kredyt: parseInt(formData.get('cel_kredyt')) || 1,
+          cel_choroba: parseInt(formData.get('cel_choroba')) || 1,
+          cel_uszczerbek: parseInt(formData.get('cel_uszczerbek')) || 1,
+          cel_uraz: parseInt(formData.get('cel_uraz')) || 1,
+          cel_emerytura: parseInt(formData.get('cel_emerytura')) || 1,
+          cel_lekarze: parseInt(formData.get('cel_lekarze')) || 1,
+          // Kwoty zabezpieczenia
+          kwota_smierc: parseInt(formData.get('kwota_smierc')) || 0,
+          kwota_kredyt: parseInt(formData.get('kwota_kredyt')) || 0,
+          kwota_choroba: parseInt(formData.get('kwota_choroba')) || 0,
+          kwota_uszczerbek: parseInt(formData.get('kwota_uszczerbek')) || 0,
+          kwota_uraz: parseInt(formData.get('kwota_uraz')) || 0,
+          kwota_emerytura: parseInt(formData.get('kwota_emerytura')) || 0,
+          // Priorytety życiowe
+          priorities_order: formData.get('priorities_order') || ''
+        };
+        
+        // Generuj rekomendacje
+        let recommendations = [];
+        
+        // 1. Analiza sytuacji rodzinnej
+        if (data.liczba_dzieci > 0) {
+          recommendations.push({
+            type: 'warning',
+            title: '👨‍👩‍👧‍👦 Ochrona rodziny',
+            text: `Posiadając ${data.liczba_dzieci} ${data.liczba_dzieci === 1 ? 'dziecko' : 'dzieci'} na utrzymaniu, szczególnie ważne jest zabezpieczenie finansowe rodziny. Rekomendujemy priorytetowe potraktowanie ubezpieczenia na życie oraz ubezpieczenia od poważnych zachorowań.`
+          });
+        }
+        
+        // 2. Analiza zobowiązań finansowych
+        if (data.zobowiazania > 0) {
+          const ratioZobowiazania = data.zobowiazania / (data.koszty_zycia * 12 || 1);
+          if (ratioZobowiazania > 3) {
+            recommendations.push({
+              type: 'warning',
+              title: '💰 Wysokie zobowiązania finansowe',
+              text: `Łączna kwota zobowiązań wynosi ${data.zobowiazania.toLocaleString('pl-PL')} PLN. W przypadku utraty zdolności zarobkowania, zabezpieczenie tego zobowiązania powinno być priorytetem. Sugerowana suma ubezpieczenia na spłatę kredytów: minimum ${data.zobowiazania.toLocaleString('pl-PL')} PLN.`
+            });
+          }
+        }
+        
+        // 3. Analiza priorytetów i kwot
+        let highPriorities = [];
+        const goals = [
+          {name: 'Zabezpieczenie finansowe rodziny na wypadek śmierci', priority: data.cel_smierc, kwota: data.kwota_smierc},
+          {name: 'Spłata kredytów i długów', priority: data.cel_kredyt, kwota: data.kwota_kredyt},
+          {name: 'Leczenie poważnych zachorowań', priority: data.cel_choroba, kwota: data.kwota_choroba},
+          {name: 'Uszczerbek na zdrowiu', priority: data.cel_uszczerbek, kwota: data.kwota_uszczerbek},
+          {name: 'Urazy i wypadki', priority: data.cel_uraz, kwota: data.kwota_uraz},
+          {name: 'Gromadzenie kapitału', priority: data.cel_emerytura, kwota: data.kwota_emerytura}
+        ];
+        
+        goals.forEach(goal => {
+          if (goal.priority >= 4) {
+            highPriorities.push(goal);
+          }
+        });
+        
+        if (highPriorities.length > 0) {
+          let prioritiesText = '<ul style="margin: 10px 0; padding-left: 20px;">';
+          highPriorities.forEach(p => {
+            prioritiesText += `<li><strong>${p.name}</strong> (priorytet: ${p.priority}/5)`;
+            if (p.kwota > 0) {
+              prioritiesText += ` - wskazana suma: <strong>${p.kwota.toLocaleString('pl-PL')} PLN</strong>`;
+            }
+            prioritiesText += '</li>';
+          });
+          prioritiesText += '</ul>';
+          
+          recommendations.push({
+            type: 'info',
+            title: '🎯 Główne priorytety klienta',
+            text: `Zidentyfikowano następujące wysokie priorytety ubezpieczeniowe:${prioritiesText}`
+          });
+        }
+        
+        // 4. Analiza budżetu
+        if (data.budzet > 0) {
+          const totalWishedAmount = data.kwota_smierc + data.kwota_kredyt + data.kwota_choroba + 
+                                    data.kwota_uszczerbek + data.kwota_uraz + data.kwota_emerytura;
+          
+          if (totalWishedAmount > 0) {
+            recommendations.push({
+              type: 'info',
+              title: '💵 Analiza budżetu i sum ubezpieczenia',
+              text: `Deklarowany miesięczny budżet: <strong>${data.budzet.toLocaleString('pl-PL')} PLN</strong><br>
+                     Łączna wskazana suma ubezpieczenia: <strong>${totalWishedAmount.toLocaleString('pl-PL')} PLN</strong><br>
+                     Zalecamy przygotowanie oferty optymalnie dopasowanej do budżetu, z możliwością rozłożenia ochrony w czasie.`
+            });
+          }
+        }
+        
+        // 5. Priorytety życiowe
+        if (data.priorities_order) {
+          recommendations.push({
+            type: 'info',
+            title: '🌟 Hierarchia priorytetów życiowych',
+            text: `Priorytety życiowe klienta w kolejności:<br><strong>${data.priorities_order.replace(/\|/g, '<br>')}</strong><br>
+                   Oferta ubezpieczeniowa powinna uwzględniać te priorytety przy planowaniu długoterminowej ochrony.`
+          });
+        }
+        
+        // 6. Rekomendacja ogólna
+        recommendations.push({
+          type: '',
+          title: '📋 Podsumowanie i kolejne kroki',
+          text: `Na podstawie analizy potrzeb Pana/Pani <strong>${data.imie} ${data.nazwisko}</strong>, rekomendujemy:
+                 <ul style="margin: 10px 0; padding-left: 20px;">
+                   <li>Umówienie spotkania w celu szczegółowego omówienia dostępnych produktów ubezpieczeniowych</li>
+                   <li>Przygotowanie spersonalizowanej oferty uwzględniającej wskazane priorytety i budżet</li>
+                   <li>Rozważenie etapowego budowania pełnej ochrony ubezpieczeniowej</li>
+                   <li>Regularne przeglądanie i aktualizowanie zakresu ochrony wraz ze zmianą sytuacji życiowej</li>
+                 </ul>`
+        });
+        
+        // Generuj tabelę podsumowującą
+        let summaryTable = `
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>Obszar ochrony</th>
+                <th>Priorytet (1-5)</th>
+                <th>Wskazana suma (PLN)</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        goals.forEach(goal => {
+          summaryTable += `
+            <tr>
+              <td>${goal.name}</td>
+              <td style="text-align: center; font-weight: bold;">${goal.priority}</td>
+              <td style="text-align: right;">${goal.kwota > 0 ? goal.kwota.toLocaleString('pl-PL') : '-'}</td>
+            </tr>
+          `;
+        });
+        
+        summaryTable += `
+            </tbody>
+          </table>
+        `;
+        
+        // Wyświetl rekomendacje
+        const section = document.getElementById('recommendationsSection');
+        const content = document.getElementById('recommendationsContent');
+        
+        let html = '<h3 style="margin-top: 0; color: #2c3e50;">📊 Tabela priorytetów</h3>';
+        html += summaryTable;
+        html += '<h3 style="margin-top: 30px; color: #2c3e50;">💡 Szczegółowe rekomendacje</h3>';
+        
+        recommendations.forEach(rec => {
+          html += `
+            <div class="recommendation-box ${rec.type}">
+              <div class="recommendation-title">${rec.title}</div>
+              <div class="recommendation-text">${rec.text}</div>
+            </div>
+          `;
+        });
+        
+        content.innerHTML = html;
+        section.style.display = 'block';
+        
+        // Przewiń do sekcji rekomendacji
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        alert('✅ Rekomendacje zostały wygenerowane! Przewiń w dół, aby je zobaczyć.');
+      }
+    </script>
+  
+
+</body></html>
